@@ -1,5 +1,17 @@
 # Function-Prediction
-Predicting functional GO annotation given Prot5 embeddings and BLAST results
+Predicting functional GO annotation given Prot5 embeddings and BLAST results.
+
+Steps for training: 
+- blast the training data against itself to obtain proteins that are similar to each other
+- preprocess the result, to build a table where we count how many times a GO term appears in the list of similar proteins for each protein
+- apply TF-IDF transformation to this table
+- train Multi Layer Perceptrons with ProtT5 embeddings concatenated with our TF-IDF table. We will have 3 models, one for each GO aspect
+
+To evaluate:
+- blast test set against the train set
+- apply TF-IDF transformation with coefficients calculated in training
+- use the models to predict functions
+- (optional, if you have ground-truth): use CAFAEVAL to evaluate the results
 
 A first step, produce the BLAST results using the standalone blast program for linux command line. 
 Create blast dataset with train sequences:
